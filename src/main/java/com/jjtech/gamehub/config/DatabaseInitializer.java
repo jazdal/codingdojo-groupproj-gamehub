@@ -2,12 +2,14 @@ package com.jjtech.gamehub.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import com.jjtech.gamehub.models.Role;
 import com.jjtech.gamehub.models.Status;
 import com.jjtech.gamehub.repositories.RoleRepository;
 import com.jjtech.gamehub.repositories.StatusRepository;
 
+@Component
 public class DatabaseInitializer implements CommandLineRunner {
 	@Autowired
 	private RoleRepository roleRepo;
