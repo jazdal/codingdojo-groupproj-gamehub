@@ -53,12 +53,12 @@ public class User {
 	
 	private String imgUrl;
 	
+	@Column(columnDefinition = "TEXT")
+	private String bio;
+
 	@NotNull(message = "Date of birth is required.")
 	@Past(message = "Date of birth must not be in the present or future.")
 	private LocalDate birthday;
-	
-	@Column(columnDefinition = "TEXT")
-	private String bio;
 	
 	@NotBlank(message = "Password is required.")
 	@Size(min = 8, max = 80, message = "Password length must be between 8-80 characters.")
@@ -124,8 +124,8 @@ public class User {
 			String lastName,
 			String email,
 			String imgUrl,
-			LocalDate birthday,
 			String bio,
+			LocalDate birthday,
 			String password,
 			String confirmPassword, 
 			Role role, 
@@ -140,8 +140,8 @@ public class User {
 		this.lastName = lastName;
 		this.email = email;
 		this.imgUrl = imgUrl;
-		this.birthday = birthday;
 		this.bio = bio;
+		this.birthday = birthday;
 		this.password = password;
 		this.confirmPassword = confirmPassword;
 		this.role = role;
@@ -200,20 +200,20 @@ public class User {
 		this.imgUrl = imgUrl;
 	}
 
-	public LocalDate getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(LocalDate birthday) {
-		this.birthday = birthday;
-	}
-
 	public String getBio() {
 		return bio;
 	}
 
 	public void setBio(String bio) {
 		this.bio = bio;
+	}
+
+	public LocalDate getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(LocalDate birthday) {
+		this.birthday = birthday;
 	}
 
 	public String getPassword() {
