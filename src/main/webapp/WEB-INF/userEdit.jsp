@@ -67,7 +67,7 @@
 		<h3 class="mb-5 text-white">Edit User Profile</h3>
 	</div>
 	<div class="container-fluid">
-		<table class="table table-striped table-hover fs-5">
+		<table class="table table-hover fs-5">
 			<form:form action="/users/process" method="PUT" modelAttribute="user">
 				<tbody>
 					<tr>
@@ -99,8 +99,13 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="fw-semibold">Last Name:</td>
-						<td>${user.getLastName()}</td>
+						<td>
+							<form:label path="lastName" class="col-form-label fw-semibold">Last Name:</form:label>
+						</td>
+						<td>
+							<form:input type="text" class="form-control fs-5" path="lastName" placeholder="Enter last name" />
+							<form:errors path="lastName" class="text-danger" />
+						</td>
 					</tr>
 					<tr>
 						<td class="fw-semibold">Email Address:</td>
