@@ -1,6 +1,7 @@
 package com.jjtech.gamehub.controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -93,5 +95,42 @@ public class UserController {
 			model.addAttribute("logoutMessage", "Logout successful!");
 		}
 		return "index.jsp";
+	}
+	
+	@GetMapping("/admin")
+	public String admin(
+			Model model,
+			Principal principal
+			) {
+		List<User> allUsers = userService.getAllUsers();
+		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+		model.addAttribute("users", allUsers);
+		return "admin.jsp";
+	}
+	
+	@GetMapping("/dashboard")
+	public String dashboard(
+			Model model,
+			Principal principal
+			) {
+		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+		return "userdash.jsp";
+	}
+	
+	@GetMapping("/users/view/{id}")
+	public String viewUser(
+			@PathVariable("id") Long id, 
+			Model model,
+			Principal principal
+			) {
+		User user = userService.findUserById(id);
+		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+		model.addAttribute("user", user);
+		return "userProfile.jsp";
+	}
+	@GetMapping("/games/new")
+	public String newGame(
+			) {
+		return "gamesNew.jsp";
 	}
 }

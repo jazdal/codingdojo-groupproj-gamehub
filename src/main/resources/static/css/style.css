@@ -35,3 +35,36 @@
 	width: 5vw;
 	height: 2vw;
 }
+
+.container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.custom-bg-color {
+	background-color: darkorange !important;
+	color:green;
+}
+
+#myTable_length {
+	color:white !important;
+	margin-bottom: 10px;
+}
+
+#myTable_length select {
+	color:white !important;
+	background-color: black;
+}
+
+#myTable_filter {
+	color: white !important;
+	margin-bottom: 10px;
+}
+
+#myTable_info {
+	color: white !important;
+}
+
+#myTable_paginate {
+	color: white !important;
+}

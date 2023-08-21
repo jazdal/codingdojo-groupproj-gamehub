@@ -12,18 +12,29 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>GameHub: Registration and Login</title>
 	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
-	<link rel="stylesheet" href="/css/style.css" />
+	<link rel="stylesheet" type="text/css" href="/css/style.css" />
 </head>
-<body>
-	<div id="regForm" class="p-3 container">
+<body class="bg-dark">
+    <nav class="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+              <img src="/img/gamehub_logo (transparent).png" alt="gamehub_logo (transparent)" width="120" height="34">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+	<div id="regForm" class="p-3 container-fluid">
 		<c:if test="${logoutMessage != null}">
 			<h2 class="mb-3 text-center text-success fw-bold"><c:out value="${logoutMessage}"/></h2>
 		</c:if>
-		<div class="d-flex justify-content-center">
-			<img class="mb-3" src="/img/gamehub_logo.png" alt="gamehub_logo" width="60%">
+		<div class="d-flex flex-column justify-content-center align-items-center">
+			<img class="mb-3" src="/img/gamehub_logo (transparent).png" alt="gamehub_logo" width="40%">
+			<h3 class="mb-5 text-white">A platform for Gamers.</h3>
 		</div>
-		<div class="row justify-content-between">
-			<form:form class="p-2 col-sm-6 card bg-primary-subtle bg-gradient shadow" action="/register" method="POST" modelAttribute="user">
+		<div class="row justify-content-between mx-0">
+			<form:form class="p-2 col-sm-6 card bg-dark-subtle bg-gradient shadow" action="/register" method="POST" modelAttribute="user">
 				<div class="card-body">
 					<h3 class="mb-4 card-title text-center fw-bold">CREATE PROFILE</h3>
 					<div class="row mb-4 align-items-center justify-content-between">
@@ -62,24 +73,6 @@
 							<form:errors path="email" class="text-danger"/>
 						</div>
 					</div>
-                    <div class="row mb-4 align-items-center justify-content-between">
-                        <div class="col-auto">
-                            <form:label path="imgUrl" class="col-form-label fs-5 fw-semibold">Profile Pic URL:</form:label>
-                        </div>
-                        <div class="col-sm-8">
-                            <form:input type="text" class="form-control fs-5" path="imgUrl" placeholder="Enter image URL" />
-                            <form:errors path="imgUrl" class="text-danger"/>
-                        </div>
-                    </div>
-                    <div class="row mb-4 align-items-center justify-content-between">
-                    	<div class="col-auto">
-                    		<form:label path="bio" class="col-form-label fs-5 fw-semibold">About You:</form:label>
-                    	</div>
-                    	<div class="col-sm-8">
-                    		<form:textarea class="form-control fs-5" rows="3" path="bio" placeholder="Enter something about yourself." />
-                    		<form:errors path="bio" class="text-danger" />
-                    	</div>
-                    </div>
                     <div class="row mb-4 align-items-center justify-content-between">
                         <div class="col-auto">
                             <form:label path="birthday" class="col-form-label fs-5 fw-semibold">Birthday:</form:label>
@@ -146,5 +139,6 @@
 	</div>
 	<script type="text/javascript" src="/js/script.js"></script>
     <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
 </html>
