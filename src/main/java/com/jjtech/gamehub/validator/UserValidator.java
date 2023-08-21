@@ -1,5 +1,7 @@
 package com.jjtech.gamehub.validator;
 
+import java.time.LocalDate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -23,6 +25,9 @@ public class UserValidator implements Validator {
 		User user = (User) target;
 		User usernameUser = userRepo.findByUsername(user.getUsername());
 		User emailUser = userRepo.findByEmail(user.getEmail());
+		LocalDate currentDate = LocalDate.now();
+		LocalDate minimumAgeDate = currentDate.minusYears(13);
+		
 		
 		if (usernameUser != null) {
 			errors.rejectValue("username", "Invalid", "Username must be unique.");
@@ -30,6 +35,10 @@ public class UserValidator implements Validator {
 		
 		if (emailUser != null) {
 			errors.rejectValue("email", "Invalid", "Email must be unique.");
+		}
+		
+		if (user.getBirthday().isBefore(minimumAgeDate) == false) {
+			errors.rejectValue("birthday", "Invalid", "You must be at least 13 years old to register an account.");
 		}
 		
 		if (!user.getConfirmPassword().equals(user.getPassword())) {

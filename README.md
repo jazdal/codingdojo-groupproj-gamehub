@@ -1,7 +1,7 @@
 # codingdojo-groupproj-gamehub
 
 ## GameHub: A simple and user-friendly gaming database and review platform.
-## Version Number: 0.5a
+## Version Number: 0.6a
 
 ## Project Description
 - GameHub is a simple and user-friendly gaming database and review platform designed for use by all types of gamers (PC, console, mobile) where they can discover and share comprehensive information about their favorite games.
@@ -20,9 +20,15 @@
     - Users can also create their own entries about a game they want to share that is not yet in the database.
     - Users can rate a particular game, and they can also provide comments or feedback about the game. They can also reply to other users' comments or feedback.
 
+## Technologies Used
+- Backend: Java 17 | Maven v.3.9.3 | Spring Boot v.3.1.2 | Spring Security v.6.1.2
+- Frontend: HTML5 + JSP | CSS3 | JavaScript | Bootstrap v.5.3.0 | jQuery v.3.7.0
+- Version Control: Git | GitHub
+- Tools: Spring Tool Suite v.4.19.1 (IDE) | VS Code v.1.81.1 (IDE) | MySQL Workbench v.8.0.34
+
 ## Project Developers:
-- Jasper Dalawangbayan
-- Jorge Jason Joaquino
+- Backend: Jasper Dalawangbayan (Full-Stack Web Developer)
+- Frontend: Jorge Jason Joaquino (Full-Stack Web Developer)
 
 ## CHANGELOG:
 
@@ -35,3 +41,8 @@
 - Created additional packages in src/main/java.
 - Created database models / entities.
 - Created repositories.
+
+**v0.6a (2023-08-21):**
+- Added Technologies Used section to README.md
+- Added JSP files.
+- Added additional custom validation for user birthday (must be at least 13 yrs old to register).

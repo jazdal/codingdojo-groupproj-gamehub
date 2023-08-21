@@ -1,7 +1,6 @@
 package com.jjtech.gamehub.controllers;
 
 import java.security.Principal;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +18,7 @@ import com.jjtech.gamehub.validator.UserValidator;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -96,27 +96,7 @@ public class UserController {
 		}
 		return "index.jsp";
 	}
-	
-	@GetMapping("/admin")
-	public String admin(
-			Model model,
-			Principal principal
-			) {
-		List<User> allUsers = userService.getAllUsers();
-		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
-		model.addAttribute("users", allUsers);
-		return "admin.jsp";
-	}
-	
-	@GetMapping("/dashboard")
-	public String dashboard(
-			Model model,
-			Principal principal
-			) {
-		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
-		return "userdash.jsp";
-	}
-	
+		
 	@GetMapping("/users/view/{id}")
 	public String viewUser(
 			@PathVariable("id") Long id, 
@@ -127,7 +107,21 @@ public class UserController {
 		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
 		model.addAttribute("user", user);
 		return "userProfile.jsp";
+	}	
+
+	@GetMapping("/users/edit/{id}")
+	public String editUserForm(
+			@PathVariable("id") Long id, 
+			Principal principal, 
+			Model model, 
+			HttpSession session
+			) {
+		session.setAttribute("userId", id);
+		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+		model.addAttribute("user", userService.findUserById(id));
+		return "userEdit.jsp";
 	}
+	
 	@GetMapping("/games/new")
 	public String newGame(
 			) {

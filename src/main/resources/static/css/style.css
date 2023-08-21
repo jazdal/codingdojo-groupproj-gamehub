@@ -68,3 +68,8 @@
 #myTable_paginate {
 	color: white !important;
 }
+
+#blankProfilePic {
+	width: 10vw;
+	border-radius: 50%;
+}

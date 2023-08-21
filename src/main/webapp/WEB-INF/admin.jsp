@@ -6,7 +6,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,7 +40,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/users/view/${currentUser.getId()}">View Profile</a></li>
-                            <li><a class="dropdown-item" href="">Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="/users/edit/${currentUser.getId()}">Edit Profile</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -80,9 +80,14 @@
 				<c:forEach var="oneUser" items="${users}">
 					<tr>
 						<td class="d-flex flex-column align-items-center">
-							<div>
-								<img src="${oneUser.getImgUrl()}" alt="user_profile_picture">
-							</div>
+							<c:choose>
+								<c:when test="${oneUser.getImgUrl() ne null}">
+									<img src="${oneUser.getImgUrl()}" alt="user_profile_picture">
+								</c:when>
+								<c:otherwise>
+									<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
+								</c:otherwise>
+							</c:choose>
 							<a href="/users/view/${oneUser.getId()}" class="h5">${oneUser.getUsername()}</a>
 						</td>
 						<td>${oneUser.getFirstName()}</td>
