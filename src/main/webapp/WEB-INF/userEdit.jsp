@@ -95,7 +95,6 @@
 						<td>
 							<form:input type="text" class="form-control fs-5" path="username" placeholder="Enter username" />
 							<form:errors path="username" class="text-danger" />
-							<form:errors path="password" class="text-danger" />
 						</td>
 					</tr>
 					<tr>

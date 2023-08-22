@@ -1,7 +1,7 @@
 # codingdojo-groupproj-gamehub
 
 ## GameHub: A simple and user-friendly gaming database and review platform.
-## Version Number: 0.6a
+## Version Number: 0.7a
 
 ## Project Description
 - GameHub is a simple and user-friendly gaming database and review platform designed for use by all types of gamers (PC, console, mobile) where they can discover and share comprehensive information about their favorite games.
@@ -32,6 +32,18 @@
 
 ## CHANGELOG:
 
+**v.0.7a (2023-08-22):**
+- Modified some attributes in the Game model.
+- Separated the Controller class into UserController and MainController.
+- Added additional routes to the UserController and MainController.
+- Created a GameService class.
+- Modified some JSP files.
+
+**v0.6a (2023-08-21):**
+- Added Technologies Used section to README.md
+- Added JSP files.
+- Added additional custom validation for user birthday (must be at least 13 yrs old to register).
+
 **v.0.5a (2023-08-19):**
 - Added *Features and Capabilities* section to the Readme.MD file.
 - Added additional dependencies to the *pom.xml* file.
@@ -41,8 +53,3 @@
 - Created additional packages in src/main/java.
 - Created database models / entities.
 - Created repositories.
-
-**v0.6a (2023-08-21):**
-- Added Technologies Used section to README.md
-- Added JSP files.
-- Added additional custom validation for user birthday (must be at least 13 yrs old to register).

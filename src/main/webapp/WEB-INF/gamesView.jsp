@@ -36,6 +36,7 @@
 			            <i class="bi bi-brightness-high-fill text-white ms-2"></i>
 		       		 </div>
                     </li>
+
                 	<c:if test="${currentUser.getRole().getName().equals('ROLE_ADMIN')}">
 	                	 <li class="nav-item">
 	                        <a class="nav-link" aria-current="page" href="/admin">Admin Dashboard</a>
@@ -46,6 +47,7 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
                         Profile
                         </a>
                         <ul class="dropdown-menu">

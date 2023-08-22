@@ -58,6 +58,7 @@ public class MainController {
 		return "gamesNew.jsp";
 	}
 	
+
 	@PostMapping("/games/add")
 	public String addGame(
 			@Valid @ModelAttribute("game") Game game, 
