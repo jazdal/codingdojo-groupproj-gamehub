@@ -67,17 +67,19 @@
 		<h3 class="mb-5 text-white">Edit User Profile</h3>
 	</div>
 	<div class="container-fluid">
-		<table class="table table-hover fs-5">
-			<form:form action="/users/process" method="PUT" modelAttribute="user">
+		<form:form action="/users/process" method="PUT" modelAttribute="user">
+			<form:input type="hidden" path="id" value="${user.getId()}" />
+			<form:input type="hidden" path="password" value="${user.getPassword()}" />
+			<table class="mb-4 table table-hover fs-5">
 				<tbody>
 					<tr>
 						<td rowspan="9" class="text-center align-middle">
 							<c:choose>
-								<c:when test="${oneUser.getImgUrl() ne null}">
-									<img src="${oneUser.getImgUrl()}" alt="user_profile_picture">
+								<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
+									<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
 								</c:when>
 								<c:otherwise>
-									<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
+									<img id="profilePic" src="${user.getImgUrl()}" alt="user_profile_picture">
 								</c:otherwise>
 							</c:choose>
 						</td>
@@ -87,6 +89,7 @@
 						<td>
 							<form:input type="text" class="form-control fs-5" path="username" placeholder="Enter username" />
 							<form:errors path="username" class="text-danger" />
+							<form:errors path="password" class="text-danger" />
 						</td>
 					</tr>
 					<tr>
@@ -108,32 +111,57 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="fw-semibold">Email Address:</td>
-						<td>${user.getEmail()}</td>
+						<td>
+							<form:label path="email" class="col-form-label fw-semibold">Email:</form:label>
+						</td>
+						<td>
+							<form:input type="text" class="form-control fs-5" path="email" placeholder="Enter email address" />
+							<form:errors path="email" class="text-danger" />
+						</td>
 					</tr>
 					<tr>
-						<td class="fw-semibold">Profile Pic Url:</td>
-						<td>${user.getImgUrl()}</td>
+						<td>
+							<form:label path="imgUrl" class="col-form-label fw-semibold">Profile Pic Url:</form:label>
+						</td>
+						<td>
+							<form:input type="text" class="form-control fs-5" path="imgUrl" placeholder="Enter profile pic url" />
+							<form:errors path="imgUrl" class="text-danger" />
+						</td>
 					</tr>
 					<tr>
-						<td class="fw-semibold">About Myself:</td>
-						<td>${user.getBio()}</td>
+						<td>
+							<form:label path="bio" class="col-form-label fw-semibold">About Myself:</form:label>
+						</td>
+						<td>
+							<form:textarea class="form-control fs-5" rows="3" path="bio" placeholder="Tell something about yourself." />
+							<form:errors path="bio" class="text-danger" />
+						</td>
 					</tr>
 					<tr>
-						<td class="fw-semibold">Birthday:</td>
-						<td>${user.getBirthday()}</td>
+						<td>
+							<form:label path="birthday" class="col-form-label fw-semibold">Birthday:</form:label>
+						</td>
+						<td>
+							<form:input type="date" class="form-control fs-5" path="birthday" placeholder="Enter your birthday" value="${user.getBirthday()}" />
+							<form:errors path="birthday" class="text-danger" />
+						</td>
 					</tr>
 					<tr>
-						<td class="fw-semibold">Owned Games:</td>
-						<td>List of Owned Games</td>
+						<td>
+							<label class="col-form-label fw-semibold">Owned Games:</label>
+						</td>
+						<td class="align-middle">List of Owned Games</td>
 					</tr>
 					<tr>
-						<td class="fw-semibold">Reviewed Games:</td>
-						<td>List of Reviewed Games</td>
+						<td>
+							<label class="col-form-label fw-semibold">Reviewed Games:</label>
+						</td>
+						<td class="align-middle">List of Reviewed Games</td>
 					</tr>
 				</tbody>
-			</form:form>
-		</table>
+			</table>
+			<input type="submit" class="btn btn-warning bg-gradient fs-5 fw-semibold" value="Update Profile">
+		</form:form>
 	</div>
 	<script>
 		$(document).ready( function () {

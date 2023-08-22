@@ -37,12 +37,32 @@ public class UserValidator implements Validator {
 			errors.rejectValue("email", "Invalid", "Email must be unique.");
 		}
 		
-		if (user.getBirthday().isBefore(minimumAgeDate) == false) {
+		if (!user.getBirthday().isBefore(minimumAgeDate)) {
 			errors.rejectValue("birthday", "Invalid", "You must be at least 13 years old to register an account.");
 		}
 		
 		if (!user.getConfirmPassword().equals(user.getPassword())) {
 			errors.rejectValue("confirmPassword", "Match", "Passwords must match.");
 		}
+	}
+	
+	public void editUserValidation(Object target, Errors errors) {
+		User user = (User) target;
+		User usernameUser = userRepo.findByUsername(user.getUsername());
+		User emailUser = userRepo.findByEmail(user.getEmail());
+		LocalDate currentDate = LocalDate.now();
+		LocalDate minimumAgeDate = currentDate.minusYears(13);
+		
+		if (usernameUser != null && user.getId() != usernameUser.getId()) {
+			errors.rejectValue("username", "Invalid", "Username is already taken.");
+		}
+		
+		if (emailUser != null && user.getId() != emailUser.getId()) {
+			errors.rejectValue("email", "Invalid", "Email is already taken.");
+		}
+		
+		if (user.getBirthday() != null && !user.getBirthday().isBefore(minimumAgeDate)) {
+			errors.rejectValue("birthday", "Invalid", "You must be at least 13 years of age.");
+		}		
 	}
 }

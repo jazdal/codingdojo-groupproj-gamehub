@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jjtech.gamehub.models.User;
@@ -120,6 +121,31 @@ public class UserController {
 		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
 		model.addAttribute("user", userService.findUserById(id));
 		return "userEdit.jsp";
+	}
+	
+	@PutMapping("/users/process")
+	public String updateUser(
+			@Valid @ModelAttribute("user") User user, 
+			BindingResult result, 
+			Principal principal, 
+			Model model, 
+			HttpSession session
+			) {
+		userValidator.editUserValidation(user, result);
+		if (result.hasErrors()) {
+			model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+			return "userEdit.jsp";
+		}
+		User userToUpdate = userService.findUserById((Long) session.getAttribute("userId"));
+		userToUpdate.setUsername(user.getUsername());
+		userToUpdate.setFirstName(user.getFirstName());
+		userToUpdate.setLastName(user.getLastName());
+		userToUpdate.setEmail(user.getEmail());
+		userToUpdate.setImgUrl(user.getImgUrl());
+		userToUpdate.setBio(user.getBio());
+		userToUpdate.setBirthday(user.getBirthday());
+		userService.updateUser(userToUpdate);
+		return "redirect:/users/view/" + (Long) session.getAttribute("userId");
 	}
 	
 	@GetMapping("/games/new")

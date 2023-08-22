@@ -73,3 +73,9 @@
 	width: 10vw;
 	border-radius: 50%;
 }
+
+#profilePic {
+	height: 35vh;
+	width: 20vw;
+	border-radius: 50%;
+}

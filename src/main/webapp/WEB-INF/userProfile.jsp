@@ -75,7 +75,7 @@
 		<div class="d-flex">
 			<div class="d-flex flex-column align-items-center container border">
 				<p>Profile Picture</p>
-				<img src="${user.getImgUrl()}" alt='user_profile_pic'>
+				<img id="profilePic" src="${user.getImgUrl()}" alt='user_profile_pic'>
 			</div>
 			<div class="container border">
 				<table>

@@ -117,7 +117,7 @@ public class User {
 	// CONSTRUCTORS
 	public User() {
 	}
-
+	
 	public User(
 			String username,
 			String firstName,

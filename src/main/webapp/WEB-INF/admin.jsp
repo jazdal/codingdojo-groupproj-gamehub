@@ -81,11 +81,11 @@
 					<tr>
 						<td class="d-flex flex-column align-items-center">
 							<c:choose>
-								<c:when test="${oneUser.getImgUrl() ne null}">
-									<img src="${oneUser.getImgUrl()}" alt="user_profile_picture">
+								<c:when test="${oneUser.getImgUrl() eq null || oneUser.getImgUrl() eq ''}">
+									<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
 								</c:when>
 								<c:otherwise>
-									<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
+									<img id="blankProfilePic" src="${oneUser.getImgUrl()}" alt="user_profile_picture">
 								</c:otherwise>
 							</c:choose>
 							<a href="/users/view/${oneUser.getId()}" class="h5">${oneUser.getUsername()}</a>
