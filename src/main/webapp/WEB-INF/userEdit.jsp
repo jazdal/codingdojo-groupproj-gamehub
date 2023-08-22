@@ -161,7 +161,13 @@
 						<td class="custom-bg-color text-dark custom-bottom-border">
 							<label class="col-form-label fw-semibold">Reviewed Games:</label>
 						</td>
-						<td class="align-middle">List of Reviewed Games</td>
+						<td class="align-middle">
+							<ul>
+								<c:forEach var="oneReview" items="${user.getReviews()}">
+									<li>${oneReview.getGame().getTitle()}</li>
+								</c:forEach>
+							</ul>
+						</td>
 					</tr>
 				</tbody>
 			</table>

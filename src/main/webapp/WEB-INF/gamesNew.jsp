@@ -94,7 +94,7 @@
 			<div class="row mb-3">
 				<form:label path="description" class="col-sm-2 h6">Game Description:</form:label>
 				<div class="col-sm-10">
-					<form:textarea path="description" type="date" class="form-control" rows="10"/>
+					<form:textarea path="description" type="text" class="form-control" rows="10"/>
 					<form:errors path="description" class="text-danger"/>
 				</div>
 			</div>

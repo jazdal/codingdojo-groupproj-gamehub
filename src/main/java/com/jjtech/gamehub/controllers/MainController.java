@@ -1,6 +1,7 @@
 package com.jjtech.gamehub.controllers;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
 import com.jjtech.gamehub.models.Game;
+import com.jjtech.gamehub.models.Review;
 import com.jjtech.gamehub.models.User;
 import com.jjtech.gamehub.services.GameService;
+import com.jjtech.gamehub.services.ReviewService;
 import com.jjtech.gamehub.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +30,9 @@ public class MainController {
 	
 	@Autowired
 	private GameService gameService;
+	
+	@Autowired
+	private ReviewService reviewService;
 	
 	@GetMapping("/admin")
 	public String admin(
@@ -80,8 +86,16 @@ public class MainController {
 			Model model, 
 			@PathVariable("gameId") Long gameId
 			) {
+		Game game = gameService.findGameById(gameId);
+		List<Review> allGameReviews = game.getReviews();
+		Double totalRating = 0.0;
+		for (Review review: allGameReviews) {
+			totalRating += review.getRating();
+		}
+		Double average = (totalRating/allGameReviews.size());
 		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
 		model.addAttribute("game", gameService.findGameById(gameId));
+		model.addAttribute("average", average);
 		return "gamesView.jsp";
 	}
 	
@@ -156,5 +170,89 @@ public class MainController {
 		model.addAttribute("currentUser", currentUser);
 		model.addAttribute("game", thisGame);
 		return "gamesView.jsp";
+	}
+	
+	@GetMapping("/games/{gameId}/review")
+	public String reviewGame(
+			@PathVariable("gameId") Long gameId,
+			Principal principal,
+			Model model,
+			@ModelAttribute("review") Review review
+			) {
+		Game thisGame = gameService.findGameById(gameId);
+		User currentUser = userService.findUserByUsername(principal.getName());
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("game", thisGame);
+		return "gamesReview.jsp";
+	}
+	
+	@PostMapping("/games/{gameId}/review/add")
+	public String addReview(
+			@PathVariable("gameId") Long gameId,
+			@Valid @ModelAttribute("review") Review review, 
+			BindingResult result, 
+			Principal principal, 
+			Model model
+			) {
+		if (result.hasErrors()) {
+			Game thisGame = gameService.findGameById(gameId);
+			model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+			model.addAttribute("game", thisGame);
+			return "gamesReview.jsp";
+		}
+		reviewService.addReview(review);
+		return "redirect:/games/view/" + gameId;
+	}
+	
+	@GetMapping("/games/{gameId}/review/edit/{reviewId}")
+	public String editReview(
+			@PathVariable("gameId") Long gameId,
+			@PathVariable("reviewId") Long reviewId,
+			Principal principal,
+			Model model,
+			@ModelAttribute("review") Review review
+			) {
+		Game thisGame = gameService.findGameById(gameId);
+		Review thisReview = reviewService.findReviewById(reviewId);
+		User currentUser = userService.findUserByUsername(principal.getName());
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("game", thisGame);
+		model.addAttribute("review", thisReview);
+		return "gamesEditReview.jsp";
+	}
+	
+	@PutMapping("/games/{gameId}/review/{reviewId}/process")
+	public String updateReview(
+			@Valid @ModelAttribute("review") Review review, 
+			BindingResult result, 
+			Principal principal, 
+			Model model, 
+			HttpSession session,
+			@PathVariable("gameId") Long gameId,
+			@PathVariable("reviewId") Long reviewId
+			) {
+		if (result.hasErrors()) {
+			Game thisGame = gameService.findGameById(gameId);
+			model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+			model.addAttribute("game", thisGame);
+			return "gamesReview.jsp";
+		}
+		Review reviewToUpdate = reviewService.findReviewById(reviewId);
+		reviewToUpdate.setRating(review.getRating());
+		reviewToUpdate.setGameReview(review.getGameReview());
+		reviewService.updateReview(reviewToUpdate);
+		return "redirect:/games/view/" + gameId;
+	}
+	
+	@GetMapping("/games/{gameId}/review/delete/{reviewId}")
+	public String deleteReview(
+			@PathVariable("reviewId") Long reviewId, 
+			@PathVariable("gameId") Long gameId,
+			Principal principal, 
+			Model model
+			) {
+		reviewService.deleteReview(reviewId);
+		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+		return "redirect:/games/view/" + gameId;
 	}
 }

@@ -71,7 +71,7 @@
             </div>
         </div>
     </nav>
-	<div class="container-fluid d-flex flex-column justify-content-center align-items-center mt-5">
+	<div class="container-fluid d-flex flex-column justify-content-center align-items-center my-5">
 		<img src="${game.getImgUrl()}" style="width:100%; height:auto;">
 		<h3 class="my-3">Edit ${game.getTitle()}</h3>
 		<form:form class="row" action="/games/edit/${game.getId()}/process" method="PUT" modelAttribute="game">
@@ -106,7 +106,7 @@
 				</div>				
 			</div>
 			<div class="d-flex justify-content-between my-2">
-				<a href="/dashboard"><button type="button" class="btn btn-danger bg-gradient btn-sm">Cancel</button></a>
+				<a href="/games/view/${game.getId()}"><button type="button" class="btn btn-danger bg-gradient btn-sm">Cancel</button></a>
 				<input type="submit" value="Update Game" class="btn btn-warning btn-sm bg-gradient fw-semibold" />
 			</div>
 		</form:form>

@@ -87,3 +87,46 @@
 	height: auto;
 	border-radius: 50%;
 }
+
+.profile-pic {
+	max-width: 150px;
+	width: 100%;
+	height: auto;
+	border-radius: 50%;
+}
+.rating > label {
+  color: #90A0A3;
+}
+
+.rating > input {
+  display: none;
+}
+
+.rating > label:before {
+  margin: 5px;
+  font-size: 20px;
+  font-family: FontAwesome;
+  content: "\f005";
+  display: inline-block;
+}
+
+.rating > input {
+  display: none;
+}
+
+.rating > input:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+  color: #F79426;
+}
+
+.rating > input:checked + label:hover,
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label,
+.rating > input:checked ~ label:hover ~ label {
+  color: #FECE31;
+}
+
+.star {
+	color: #FECE31;
+}
