@@ -47,29 +47,28 @@
 }
 
 #myTable_length {
-	color:white !important;
 	margin-bottom: 10px;
 }
 
 #myTable_length select {
 	color:white !important;
-	background-color: black;
+	background-color: dimgrey;
 }
 
 #myTable_filter {
-	color: white !important;
 	margin-bottom: 10px;
 }
 
-#myTable_info {
+/*#myTable_info {
 	color: white !important;
 }
 
 #myTable_paginate {
 	color: white !important;
-}
+}*/
 
 #blankProfilePic {
+	max-width: 100px;
 	width: 10vw;
 	border-radius: 50%;
 }
