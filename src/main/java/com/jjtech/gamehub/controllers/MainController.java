@@ -118,4 +118,43 @@ public class MainController {
 		gameService.updateGame(gameToUpdate);
 		return "redirect:/games/view/" + gameId;
 	}
+	
+	@GetMapping("/games/delete/{gameId}")
+	public String deleteGame(
+			@PathVariable("gameId") Long gameId, 
+			Principal principal, 
+			Model model
+			) {
+		gameService.deleteGame(gameId);
+		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+		return "redirect:/dashboard";
+	}
+	
+	@GetMapping("/games/like/{gameId}")
+	public String likeGame(
+			@PathVariable("gameId") Long gameId, 
+			Principal principal, 
+			Model model
+			) {
+		Game thisGame = gameService.findGameById(gameId);
+		User currentUser = userService.findUserByUsername(principal.getName());
+		gameService.likeGame(thisGame, currentUser);
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("game", thisGame);
+		return "gamesView.jsp";
+	}
+	
+	@GetMapping("/games/unlike/{gameId}")
+	public String unlikeGame(
+			@PathVariable("gameId") Long gameId, 
+			Principal principal, 
+			Model model
+			) {
+		Game thisGame = gameService.findGameById(gameId);
+		User currentUser = userService.findUserByUsername(principal.getName());
+		gameService.unlikeGame(thisGame, currentUser);
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("game", thisGame);
+		return "gamesView.jsp";
+	}
 }

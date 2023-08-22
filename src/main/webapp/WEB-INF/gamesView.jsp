@@ -85,8 +85,9 @@
 		<div class="d-flex align-items-center justify-content-between mb-3">
 			<a href="/"><button class="btn btn-sm btn-warning">Add to Owned Games</button></a>
 			<div class="d-flex">
-				<p>Number of people like this game.</p>
-				<a href=""><button class="btn btn-sm btn-primary ms-3">Like</button></a>
+				<p>${game.getLikers().size()} people like this game.</p>
+				<a href="/games/like/${game.getId()}"><button class="btn btn-sm btn-primary ms-3">Like</button></a>
+				<a href="/games/unlike/${game.getId()}"><button class="btn btn-sm btn-primary ms-3">Unlike</button></a>
 			</div>
 		</div>
 	</div>
