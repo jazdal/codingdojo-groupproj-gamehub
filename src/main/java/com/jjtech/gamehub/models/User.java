@@ -96,6 +96,12 @@ public class User {
 			mappedBy = "user", 
 			fetch = FetchType.LAZY
 	)
+	private List<Game> games;
+	
+	@OneToMany(
+			mappedBy = "user", 
+			fetch = FetchType.LAZY
+	)
 	private List<Review> reviews;
 	
 	@ManyToMany(fetch = FetchType.LAZY)

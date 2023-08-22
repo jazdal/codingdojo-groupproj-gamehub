@@ -147,10 +147,4 @@ public class UserController {
 		userService.updateUser(userToUpdate);
 		return "redirect:/users/view/" + (Long) session.getAttribute("userId");
 	}
-	
-	@GetMapping("/games/new")
-	public String newGame(
-			) {
-		return "gamesNew.jsp";
-	}
 }
