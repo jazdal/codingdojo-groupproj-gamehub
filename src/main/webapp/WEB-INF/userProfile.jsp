@@ -13,6 +13,7 @@
 	<title>GameHub: User Profile</title>
 	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
 	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 </head>
@@ -27,7 +28,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
         	<div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+            	<ul class="navbar-nav justify-content-end align-items-md-center">
+                    <li class="nav-item">
+	                  <div class="d-flex align-items-center form-check form-switch ps-0">
+			            <i class="bi bi-moon-stars-fill text-white me-5"></i>
+			            <input class="form-check-input" type="checkbox" role="switch" id="switch" onClick="toggleTheme()" style="max-height: 20px; max-width:50px;">
+			            <i class="bi bi-brightness-high-fill text-white ms-2"></i>
+		       		 </div>
+                    </li>
                 	<c:if test="${currentUser.getRole().getName().equals('ROLE_ADMIN')}">
 	                	 <li class="nav-item">
 	                        <a class="nav-link" aria-current="page" href="/admin">Admin Dashboard</a>
@@ -65,14 +73,15 @@
     </nav>
 	<div class="d-flex flex-column justify-content-center align-items-center mt-5">
        	<c:if test="${currentUser.getId() == user.getId()}">
-			<h3 class="mb-5 text-white">Your Profile</h3>
+			<h3 class="mb-5">Your Profile</h3>
      	</c:if>
      	<c:if test="${currentUser.getId() != user.getId()}">
-			<h3 class="mb-5 text-white">${user.getUsername()}'s Profile</h3>
+			<h3 class="mb-5">${user.getUsername()}'s Profile</h3>
      	</c:if>    
 	</div>
 	<div class="container-fluid">
 		<div class="d-flex">
+<<<<<<< HEAD
 			<div class="p-4 d-flex flex-column align-items-center container border">
 				<c:choose>
 					<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
@@ -83,9 +92,21 @@
 					</c:otherwise>
 				</c:choose>
 				<p>Profile Picture</p>
+=======
+			<div class="d-flex flex-column align-items-center container col-4">
+				<p class="fw-bold">Profile Picture</p>
+				<c:choose>
+					<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
+						<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
+					</c:when>
+					<c:otherwise>
+						<img id="profilePic" src="${user.getImgUrl()}" alt="user_profile_picture">
+					</c:otherwise>
+				</c:choose>
+>>>>>>> branch 'master' of https://github.com/jazdal/codingdojo-groupproj-gamehub.git
 			</div>
-			<div class="container border">
-				<table>
+			<div class="container col-8">
+				<table class="mb-4 table table-hover fs-5 align-middle border rounded overflow-hidden bg-gradient shadow">
 					<tbody>
 						<tr>
 							<th>Username:</th>
@@ -93,6 +114,7 @@
 						</tr>
 						<tr>
 							<th>About:</th>
+<<<<<<< HEAD
 							<c:choose>
 								<c:when test="${user.getBio() eq null || user.getBio() eq ''}">
 									<td>User is still a noob.</td>
@@ -101,6 +123,14 @@
 									<td>${user.getBio()}</td>
 								</c:otherwise>
 							</c:choose>
+=======
+							<c:if test="${not empty user.getBio()}">
+								<td>${user.getBio()}</td>
+							</c:if>
+							<c:if test="${empty user.getBio()}">
+								<td>User has not provided this yet. Noob.</td>
+							</c:if>
+>>>>>>> branch 'master' of https://github.com/jazdal/codingdojo-groupproj-gamehub.git
 						</tr>
 						<tr>
 							<th>Owned Games:</th>
@@ -116,10 +146,10 @@
 		</div>
 		<div class="mt-5">
 	       	<c:if test="${currentUser.getId() == user.getId()}">
-				<h4 class="mb-5 text-white">Your Reviews:</h4>
+				<h4 class="mb-5">Your Reviews:</h4>
 	     	</c:if>
 	     	<c:if test="${currentUser.getId() != user.getId()}">
-				<h4 class="mb-5 text-white">Reviews by ${user.getUsername()}:</h4>
+				<h4 class="mb-5">Reviews by ${user.getUsername()}:</h4>
 	     	</c:if>			
 		</div>
 	</div>
@@ -129,7 +159,6 @@
 		} );
 	</script>
 	<script type="text/javascript" src="/js/script.js"></script>
-    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
 </body>

@@ -47,31 +47,34 @@
 }
 
 #myTable_length {
-	color:white !important;
 	margin-bottom: 10px;
 }
 
 #myTable_length select {
 	color:white !important;
-	background-color: black;
+	background-color: dimgrey;
 }
 
 #myTable_filter {
-	color: white !important;
 	margin-bottom: 10px;
 }
 
-#myTable_info {
+/*#myTable_info {
 	color: white !important;
 }
 
 #myTable_paginate {
 	color: white !important;
-}
+}*/
 
 #blankProfilePic {
+<<<<<<< HEAD
 	height: 10rem;
 	width: 10rem;
+=======
+	max-width: 100px;
+	width: 10vw;
+>>>>>>> branch 'master' of https://github.com/jazdal/codingdojo-groupproj-gamehub.git
 	border-radius: 50%;
 }
 

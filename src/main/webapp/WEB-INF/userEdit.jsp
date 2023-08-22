@@ -6,17 +6,18 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>GameHub: Edit User</title>
 	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
 	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 </head>
-<body class="bg-dark">
+<body>
     <nav class="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
@@ -27,7 +28,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
         	<div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav justify-content-end align-items-md-center">
+                    <li class="nav-item">
+	                  <div class="d-flex align-items-center form-check form-switch ps-0">
+			            <i class="bi bi-moon-stars-fill text-white me-5"></i>
+			            <input class="form-check-input" type="checkbox" role="switch" id="switch" onClick="toggleTheme()" style="max-height: 20px; max-width:50px;">
+			            <i class="bi bi-brightness-high-fill text-white ms-2"></i>
+		       		 </div>
+                    </li>                
                 	<c:if test="${currentUser.getRole().getName().equals('ROLE_ADMIN')}">
 	                	 <li class="nav-item">
 	                        <a class="nav-link" aria-current="page" href="/admin">Admin Dashboard</a>
@@ -42,7 +50,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/users/view/${currentUser.getId()}">View Profile</a></li>
-                            <li><a class="dropdown-item" href="/">Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="/users/edit/${currentUser.getId()}">Edit Profile</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -64,16 +72,16 @@
         </div>
     </nav>
 	<div class="d-flex flex-column justify-content-center align-items-center mt-5">
-		<h3 class="mb-5 text-white">Edit User Profile</h3>
+		<h3 class="mb-5">Edit User Profile</h3>
 	</div>
 	<div class="container-fluid">
 		<form:form action="/users/process" method="PUT" modelAttribute="user">
 			<form:input type="hidden" path="id" value="${user.getId()}" />
 			<form:input type="hidden" path="password" value="${user.getPassword()}" />
-			<table class="mb-4 table table-hover fs-5">
+			<table class="mb-4 table fs-5 shadow">
 				<tbody>
 					<tr>
-						<td rowspan="9" class="text-center align-middle">
+						<td rowspan="9" class="text-center align-middle border-bottom-0">
 							<c:choose>
 								<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
 									<img id="profilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
@@ -168,7 +176,6 @@
 		} );
 	</script>
 	<script type="text/javascript" src="/js/script.js"></script>
-    <script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
 </body>
