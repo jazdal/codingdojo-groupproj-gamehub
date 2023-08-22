@@ -74,24 +74,22 @@
 	<div class="d-flex flex-column justify-content-center align-items-center mt-5">
 		<h3 class="mb-5">Edit User Profile</h3>
 	</div>
-	<div class="container-fluid">
-		<form:form action="/users/process" method="PUT" modelAttribute="user">
+	<div class="container-fluid d-flex flex-column align-items-center justify-content-center">
+		<c:choose>
+			<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
+				<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture" class="mb-3">
+			</c:when>
+			<c:otherwise>
+				<img id="profilePic" src="${user.getImgUrl()}" alt="user_profile_picture" class="mb-3">
+			</c:otherwise>
+		</c:choose>
+		<form:form class="container col-md-8" action="/users/process" method="PUT" modelAttribute="user">
 			<form:input type="hidden" path="id" value="${user.getId()}" />
 			<form:input type="hidden" path="password" value="${user.getPassword()}" />
-			<table class="mb-4 table fs-5 shadow">
+			<table class="mb-4 table fs-5 shadow rounded border overflow-hidden">
 				<tbody>
 					<tr>
-						<td rowspan="9" class="text-center align-middle border-bottom-0">
-							<c:choose>
-								<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
-									<img id="profilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
-								</c:when>
-								<c:otherwise>
-									<img id="profilePic" src="${user.getImgUrl()}" alt="user_profile_picture">
-								</c:otherwise>
-							</c:choose>
-						</td>
-						<td>
+						<td class="custom-bg-color text-dark custom-bottom-border">
 							<form:label path="username" class="col-form-label fw-semibold">Username:</form:label>
 						</td>
 						<td>
@@ -100,7 +98,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="custom-bg-color text-dark custom-bottom-border">
 							<form:label path="firstName" class="col-form-label fw-semibold">First Name:</form:label>
 						</td>
 						<td>
@@ -109,7 +107,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="custom-bg-color text-dark custom-bottom-border">
 							<form:label path="lastName" class="col-form-label fw-semibold">Last Name:</form:label>
 						</td>
 						<td>
@@ -118,7 +116,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="custom-bg-color text-dark custom-bottom-border">
 							<form:label path="email" class="col-form-label fw-semibold">Email:</form:label>
 						</td>
 						<td>
@@ -127,7 +125,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="custom-bg-color text-dark custom-bottom-border">
 							<form:label path="imgUrl" class="col-form-label fw-semibold">Profile Pic Url:</form:label>
 						</td>
 						<td>
@@ -136,7 +134,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="custom-bg-color text-dark custom-bottom-border">
 							<form:label path="bio" class="col-form-label fw-semibold">About Myself:</form:label>
 						</td>
 						<td>
@@ -145,7 +143,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="custom-bg-color text-dark custom-bottom-border">
 							<form:label path="birthday" class="col-form-label fw-semibold">Birthday:</form:label>
 						</td>
 						<td>
@@ -154,20 +152,22 @@
 						</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="custom-bg-color text-dark custom-bottom-border">
 							<label class="col-form-label fw-semibold">Owned Games:</label>
 						</td>
 						<td class="align-middle">List of Owned Games</td>
 					</tr>
 					<tr>
-						<td>
+						<td class="custom-bg-color text-dark custom-bottom-border">
 							<label class="col-form-label fw-semibold">Reviewed Games:</label>
 						</td>
 						<td class="align-middle">List of Reviewed Games</td>
 					</tr>
 				</tbody>
 			</table>
-			<input type="submit" class="btn btn-warning bg-gradient fs-5 fw-semibold" value="Update Profile">
+			<div class="d-flex justify-content-end">
+				<input type="submit" class="btn btn-warning bg-gradient fs-5 fw-semibold" value="Update Profile">
+			</div>
 		</form:form>
 	</div>
 	<script>

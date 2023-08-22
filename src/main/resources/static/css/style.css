@@ -42,7 +42,7 @@
 }
 
 .custom-bg-color {
-	background-color: darkorange !important;
+	background-color: #ffa31a !important;
 	color:green;
 }
 
@@ -66,20 +66,24 @@
 #myTable_paginate {
 	color: white !important;
 }*/
+.game-pic {
+	max-width: 300px;
+	min-width: 150px;
+	width: 10vw;
+}
+.custom-bottom-border {
+	border-bottom-color: darkorange;
+}
 
 #blankProfilePic {
-<<<<<<< HEAD
-	height: 10rem;
-	width: 10rem;
-=======
-	max-width: 100px;
+  max-width: 100px;
 	width: 10vw;
->>>>>>> branch 'master' of https://github.com/jazdal/codingdojo-groupproj-gamehub.git
 	border-radius: 50%;
 }
 
 #profilePic {
-	height: 20rem;
-	width: 20rem;
+	max-width: 200px;
+	width: 100%;
+	height: auto;
 	border-radius: 50%;
 }

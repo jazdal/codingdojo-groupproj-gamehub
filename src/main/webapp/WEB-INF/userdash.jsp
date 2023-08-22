@@ -74,49 +74,39 @@
 	<div class="d-flex flex-column justify-content-center align-items-center mt-5">
 		<h3 class="mb-5">User Dashboard</h3>
 	</div>
-	<div class="container-fluid">
+	<div class="container-fluid mb-5">
 		<h4 class="mb-3">All Games:</h4>
 		<table id="myTable" class="table table-striped align-middle border rounded overflow-hidden bg-gradient shadow">
 			<thead>
 				<tr>
-					<th class="custom-bg-color text-dark">Title</th>
-					<th class="custom-bg-color text-dark">Genre</th>
-					<th class="custom-bg-color text-dark">Description</th>
-					<th class="custom-bg-color text-dark">Actions</th>									
+					<th class="custom-bg-color text-dark col-3">Title</th>
+					<th class="custom-bg-color text-dark col-1">Genre</th>
+					<th class="custom-bg-color text-dark col-6">Description</th>
+					<th class="custom-bg-color text-dark col-2">Actions</th>									
 				</tr>
 			</thead>
 			<tbody class="table-group-divider">
-			
-				<tr>
-					<td>Picture and Title</td>
-					<td>Genre</td>
-					<td>Description</td>
-					<td>
-						<a href=""><button class="btn btn-sm btn-primary my-1">View</button></a>
-						<a href=""><button class="btn btn-sm btn-warning my-1">Edit</button></a>
-						<a href=""><button class="btn btn-sm btn-danger my-1">Delete</button></a>
-					</td>
-				</tr>
-				<tr>
-					<td>Picture and Title</td>
-					<td>Genre</td>
-					<td>Description</td>
-					<td>
-						<a href=""><button class="btn btn-sm btn-primary my-1">View</button></a>
-						<a href=""><button class="btn btn-sm btn-warning my-1">Edit</button></a>
-						<a href=""><button class="btn btn-sm btn-danger my-1">Delete</button></a>
-					</td>
-				</tr>
-				<tr>
-					<td>Picture and Title</td>
-					<td>Genre</td>
-					<td>Description</td>
-					<td>
-						<a href=""><button class="btn btn-sm btn-primary my-1">View</button></a>
-						<a href=""><button class="btn btn-sm btn-warning my-1">Edit</button></a>
-						<a href=""><button class="btn btn-sm btn-danger my-1">Delete</button></a>
-					</td>
-				</tr>
+				<c:forEach var="oneGame" items="${games}">				
+					<tr>
+						<td class="align-middle">
+							<div class="d-flex flex-column justify-content-center align-items-center">
+								<c:if test="${not empty oneGame.getImgUrl()}">
+									<a href="/games/view/${oneGame.getId()}"><img class="game-pic mb-1"src="${oneGame.getImgUrl()}"></a>
+								</c:if>
+								<a href="/games/view/${oneGame.getId()}">${oneGame.getTitle()}</a>
+							</div>
+						</td>
+						<td>${oneGame.getGenre()}</td>
+						<td>${oneGame.getDescription()}</td>
+						<td>
+							<a href="/games/view/${oneGame.getId()}"><button class="btn btn-sm btn-primary my-1">View</button></a>
+							<c:if test="${currentUser.getId() == oneGame.getUser().getId()}">
+								<a href="/games/edit/${oneGame.getId()}"><button class="btn btn-sm btn-warning my-1">Edit</button></a>
+								<a href="/games/delete/${oneGame.getId()}"><button class="btn btn-sm btn-danger my-1">Delete</button></a>
+							</c:if>
+						</td>
+					</tr>
+				</c:forEach>
 			</tbody>
 		</table>
 		<div>

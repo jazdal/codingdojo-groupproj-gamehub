@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import com.jjtech.gamehub.models.Game;
+import com.jjtech.gamehub.models.User;
 import com.jjtech.gamehub.services.GameService;
 import com.jjtech.gamehub.services.UserService;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -41,6 +44,7 @@ public class MainController {
 			Principal principal
 			) {
 		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+		model.addAttribute("games", gameService.getAllGames());
 		return "userdash.jsp";
 	}
 
@@ -54,7 +58,8 @@ public class MainController {
 		return "gamesNew.jsp";
 	}
 	
-	@PostMapping("/games/new")
+
+	@PostMapping("/games/add")
 	public String addGame(
 			@Valid @ModelAttribute("game") Game game, 
 			BindingResult result, 
@@ -78,5 +83,39 @@ public class MainController {
 		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
 		model.addAttribute("game", gameService.findGameById(gameId));
 		return "gamesView.jsp";
+	}
+	
+	@GetMapping("/games/edit/{gameId}")
+	public String editGame(
+			@PathVariable("gameId") Long gameId,
+			Principal principal,
+			Model model,
+			HttpSession session) {
+		Game game = gameService.findGameById(gameId);
+		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+		model.addAttribute("game", game);
+		return "gamesEdit.jsp";
+	}
+	
+	@PutMapping("/games/edit/{gameId}/process")
+	public String updateGame(
+			@Valid @ModelAttribute("game") Game game, 
+			BindingResult result, 
+			Principal principal, 
+			Model model, 
+			HttpSession session,
+			@PathVariable("gameId") Long gameId
+			) {
+		if (result.hasErrors()) {
+			model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+			return "gamesEdit.jsp";
+		}
+		Game gameToUpdate = gameService.findGameById(gameId);
+		gameToUpdate.setTitle(game.getTitle());
+		gameToUpdate.setGenre(game.getGenre());
+		gameToUpdate.setDescription(game.getDescription());
+		gameToUpdate.setImgUrl(game.getImgUrl());
+		gameService.updateGame(gameToUpdate);
+		return "redirect:/games/view/" + gameId;
 	}
 }

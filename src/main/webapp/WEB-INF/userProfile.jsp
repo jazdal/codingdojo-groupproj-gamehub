@@ -80,20 +80,8 @@
      	</c:if>    
 	</div>
 	<div class="container-fluid">
-		<div class="d-flex">
-<<<<<<< HEAD
-			<div class="p-4 d-flex flex-column align-items-center container border">
-				<c:choose>
-					<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
-						<img id="profilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
-					</c:when>
-					<c:otherwise>
-						<img id="profilePic" src="${user.getImgUrl()}" alt="user_profile_picture">
-					</c:otherwise>
-				</c:choose>
-				<p>Profile Picture</p>
-=======
-			<div class="d-flex flex-column align-items-center container col-4">
+		<div class="d-flex flex-column flex-md-row">
+			<div class="d-flex flex-column align-items-center container col-4 mb-3">
 				<p class="fw-bold">Profile Picture</p>
 				<c:choose>
 					<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
@@ -103,41 +91,35 @@
 						<img id="profilePic" src="${user.getImgUrl()}" alt="user_profile_picture">
 					</c:otherwise>
 				</c:choose>
->>>>>>> branch 'master' of https://github.com/jazdal/codingdojo-groupproj-gamehub.git
 			</div>
-			<div class="container col-8">
+			<div class="container col-md-8">
 				<table class="mb-4 table table-hover fs-5 align-middle border rounded overflow-hidden bg-gradient shadow">
 					<tbody>
 						<tr>
-							<th>Username:</th>
+							<th class="custom-bg-color text-dark custom-bottom-border">Username:</th>
 							<td>${user.getUsername()}</td>
 						</tr>
 						<tr>
-							<th>About:</th>
-<<<<<<< HEAD
-							<c:choose>
-								<c:when test="${user.getBio() eq null || user.getBio() eq ''}">
-									<td>User is still a noob.</td>
-								</c:when>
-								<c:otherwise>
-									<td>${user.getBio()}</td>
-								</c:otherwise>
-							</c:choose>
-=======
+							<th class="custom-bg-color text-dark custom-bottom-border">About:</th>
 							<c:if test="${not empty user.getBio()}">
 								<td>${user.getBio()}</td>
 							</c:if>
 							<c:if test="${empty user.getBio()}">
 								<td>User has not provided this yet. Noob.</td>
 							</c:if>
->>>>>>> branch 'master' of https://github.com/jazdal/codingdojo-groupproj-gamehub.git
 						</tr>
 						<tr>
-							<th>Owned Games:</th>
-							<td>Enter Games Here</td>
+							<th class="custom-bg-color text-dark custom-bottom-border">Owned Games:</th>
+							<td>
+<%-- 								<ul>
+									<c:forEach var="oneGame" items="${user.getGames() }">
+										<li>${oneGame.title}</li>
+									</c:forEach>
+								</ul> --%>
+							</td>
 						</tr>
 						<tr>
-							<th>Reviewed Games:</th>
+							<th class="custom-bg-color text-dark border-dark">Reviewed Games:</th>
 							<td>Enter Reviewed Games Here</td>
 						</tr>
 					</tbody>
