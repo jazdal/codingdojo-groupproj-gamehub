@@ -72,7 +72,7 @@
 	<div class="d-flex flex-column justify-content-center align-items-center mt-5">
 		<h3 class="mb-5">Admin Dashboard</h3>
 	</div>
-	<div class="container-fluid">
+	<div class="container-fluid mb-5">
 		<h4 class="mb-3">All Users:</h4>
 		<table id="myTable" class="table table-striped align-middle border rounded overflow-hidden bg-gradient shadow">
 			<thead>

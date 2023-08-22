@@ -80,8 +80,8 @@
      	</c:if>    
 	</div>
 	<div class="container-fluid">
-		<div class="d-flex">
-			<div class="d-flex flex-column align-items-center container col-4">
+		<div class="d-flex flex-column flex-md-row">
+			<div class="d-flex flex-column align-items-center container col-4 mb-3">
 				<p class="fw-bold">Profile Picture</p>
 				<c:choose>
 					<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
@@ -92,15 +92,15 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-			<div class="container col-8">
+			<div class="container col-md-8">
 				<table class="mb-4 table table-hover fs-5 align-middle border rounded overflow-hidden bg-gradient shadow">
 					<tbody>
 						<tr>
-							<th>Username:</th>
+							<th class="custom-bg-color text-dark custom-bottom-border">Username:</th>
 							<td>${user.getUsername()}</td>
 						</tr>
 						<tr>
-							<th>About:</th>
+							<th class="custom-bg-color text-dark custom-bottom-border">About:</th>
 							<c:if test="${not empty user.getBio()}">
 								<td>${user.getBio()}</td>
 							</c:if>
@@ -109,11 +109,17 @@
 							</c:if>
 						</tr>
 						<tr>
-							<th>Owned Games:</th>
-							<td>Enter Games Here</td>
+							<th class="custom-bg-color text-dark custom-bottom-border">Owned Games:</th>
+							<td>
+<%-- 								<ul>
+									<c:forEach var="oneGame" items="${user.getGames() }">
+										<li>${oneGame.title}</li>
+									</c:forEach>
+								</ul> --%>
+							</td>
 						</tr>
 						<tr>
-							<th>Reviewed Games:</th>
+							<th class="custom-bg-color text-dark border-dark">Reviewed Games:</th>
 							<td>Enter Reviewed Games Here</td>
 						</tr>
 					</tbody>

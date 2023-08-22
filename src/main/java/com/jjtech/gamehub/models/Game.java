@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -40,6 +41,8 @@ public class Game {
 	@Column(columnDefinition = "TEXT")
 	private String description;
 	
+	private String imgUrl;
+	
 	@Column(updatable = false)
 	private Date createdAt;
 	
@@ -63,6 +66,10 @@ public class Game {
 	)
 	private List<Review> reviews;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(
 			name = "owned_games", 
@@ -77,27 +84,31 @@ public class Game {
 			joinColumns = @JoinColumn(name = "game_id"), 
 			inverseJoinColumns = @JoinColumn(name = "user_id")
 	)
-	private List<User> users;
+	private List<User> likers;
 	
 	// CONSTRUCTORS
 	public Game() {
 	}
-
+	
 	public Game(
 			String title,
 			String genre,
 			String description,
+			String imgUrl, 
 			List<Review> reviews, 
+			User user, 
 			List<User> owners, 
-			List<User> users
+			List<User> likers
 			) {
 		super();
 		this.title = title;
 		this.genre = genre;
 		this.description = description;
+		this.imgUrl = imgUrl;
 		this.reviews = reviews;
+		this.user = user;
 		this.owners = owners;
-		this.users = users;
+		this.likers = likers;
 	}
 
 	// GETTERS AND SETTERS
@@ -133,6 +144,14 @@ public class Game {
 		this.description = description;
 	}
 
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
 	public Date getCreatedAt() {
 		return createdAt;
 	}
@@ -157,6 +176,14 @@ public class Game {
 		this.reviews = reviews;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public List<User> getOwners() {
 		return owners;
 	}
@@ -165,11 +192,11 @@ public class Game {
 		this.owners = owners;
 	}
 
-	public List<User> getUsers() {
-		return users;
+	public List<User> getLikers() {
+		return likers;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setLikers(List<User> likers) {
+		this.likers = likers;
 	}
 }

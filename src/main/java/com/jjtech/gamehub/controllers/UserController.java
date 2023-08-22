@@ -148,9 +148,4 @@ public class UserController {
 		return "redirect:/users/view/" + (Long) session.getAttribute("userId");
 	}
 	
-	@GetMapping("/games/new")
-	public String newGame(
-			) {
-		return "gamesNew.jsp";
-	}
 }
