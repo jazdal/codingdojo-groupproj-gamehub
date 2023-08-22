@@ -10,7 +10,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>GameHub: User Dashboard</title>
+	<title>GameHub: Add Game</title>
 	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/style.css" />
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
@@ -22,7 +22,7 @@
             <a class="navbar-brand" href="/">
               <img src="/img/gamehub_logo (transparent).png" alt="gamehub_logo (transparent)" width="120" height="34">
             </a>
-            <span class="navbar-text">Enter Username Here</span>
+            <span class="navbar-text">${currentUser.getUsername()}</span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,8 +36,8 @@
                         Profile
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/">View Profile</a></li>
-                            <li><a class="dropdown-item" href="/">Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="/users/view/${currentUser.getId()}">View Profile</a></li>
+                            <li><a class="dropdown-item" href="/users/edit/${currentUser.getId()}">Edit Profile</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -45,7 +45,7 @@
                         Games
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/contractor/projects/create">Add Game</a></li>
+                            <li><a class="dropdown-item" href="/games/new">Add Game</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -62,8 +62,8 @@
 		<h3 class="mb-5 text-white">Add a Game</h3>
 	</div>
 		<div class="container w-50">
-		<form:form action="/games/add" method="POST" modelAttribute="game">
-			<form:hidden path="user" value="${theUser.getId()}"/>
+		<form:form action="/games/new" method="POST" modelAttribute="game">
+			<form:hidden path="user.id" value="${currentUser.getId()}"/>
 			<div class="form-group">
 				<form:label path="title" class="h6">Game Title:</form:label>
 				<form:input path="title" type="text" class="form-control"/>

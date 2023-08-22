@@ -42,7 +42,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/users/view/${currentUser.getId()}">View Profile</a></li>
-                            <li><a class="dropdown-item" href="/">Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="/users/edit/${currentUser.getId()}">Edit Profile</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -73,9 +73,16 @@
 	</div>
 	<div class="container-fluid">
 		<div class="d-flex">
-			<div class="d-flex flex-column align-items-center container border">
+			<div class="p-4 d-flex flex-column align-items-center container border">
+				<c:choose>
+					<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
+						<img id="profilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
+					</c:when>
+					<c:otherwise>
+						<img id="profilePic" src="${user.getImgUrl()}" alt="user_profile_picture">
+					</c:otherwise>
+				</c:choose>
 				<p>Profile Picture</p>
-				<img id="profilePic" src="${user.getImgUrl()}" alt='user_profile_pic'>
 			</div>
 			<div class="container border">
 				<table>
@@ -86,12 +93,14 @@
 						</tr>
 						<tr>
 							<th>About:</th>
-							<c:if test="${user.getBio()}">
-								<td>${user.getBio()}</td>
-							</c:if>
-							<c:if test="${!user.getBio()}">
-								<td>User is still a noob.</td>
-							</c:if>
+							<c:choose>
+								<c:when test="${user.getBio() eq null || user.getBio() eq ''}">
+									<td>User is still a noob.</td>
+								</c:when>
+								<c:otherwise>
+									<td>${user.getBio()}</td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 						<tr>
 							<th>Owned Games:</th>

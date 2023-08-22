@@ -76,7 +76,7 @@
 						<td rowspan="9" class="text-center align-middle">
 							<c:choose>
 								<c:when test="${user.getImgUrl() eq null || user.getImgUrl() eq ''}">
-									<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
+									<img id="profilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
 								</c:when>
 								<c:otherwise>
 									<img id="profilePic" src="${user.getImgUrl()}" alt="user_profile_picture">
@@ -89,7 +89,6 @@
 						<td>
 							<form:input type="text" class="form-control fs-5" path="username" placeholder="Enter username" />
 							<form:errors path="username" class="text-danger" />
-							<form:errors path="password" class="text-danger" />
 						</td>
 					</tr>
 					<tr>

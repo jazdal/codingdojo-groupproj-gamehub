@@ -48,7 +48,7 @@
                         Games
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/contractor/projects/create">Add Game</a></li>
+                            <li><a class="dropdown-item" href="/games/new">Add Game</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">

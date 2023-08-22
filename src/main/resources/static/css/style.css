@@ -70,12 +70,13 @@
 }
 
 #blankProfilePic {
-	width: 10vw;
+	height: 10rem;
+	width: 10rem;
 	border-radius: 50%;
 }
 
 #profilePic {
-	height: 35vh;
-	width: 20vw;
+	height: 20rem;
+	width: 20rem;
 	border-radius: 50%;
 }
