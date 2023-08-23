@@ -1,7 +1,7 @@
 # codingdojo-groupproj-gamehub
 
 ## GameHub: A simple and user-friendly gaming database and review platform.
-## Version Number: 0.7a
+## Version Number: 0.8a
 
 ## Project Description
 - GameHub is a simple and user-friendly gaming database and review platform designed for use by all types of gamers (PC, console, mobile) where they can discover and share comprehensive information about their favorite games.
@@ -31,6 +31,11 @@
 - Frontend: Jorge Jason Joaquino (Full-Stack Web Developer)
 
 ## CHANGELOG:
+
+**v.0.8a (2023-08-23):**
+- Added a StatusService class.
+- Added functionality for the Ban / Unban, Deactivate / Activate buttons in the Admin dashboard.
+- Added additional validation to prevent a banned user from logging in.
 
 **v.0.7a (2023-08-22):**
 - Modified some attributes in the Game model.

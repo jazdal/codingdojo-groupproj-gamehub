@@ -37,7 +37,7 @@ public class UserValidator implements Validator {
 			errors.rejectValue("email", "Invalid", "Email must be unique.");
 		}
 		
-		if (!user.getBirthday().isBefore(minimumAgeDate)) {
+		if (user.getBirthday() != null && !user.getBirthday().isBefore(minimumAgeDate)) {
 			errors.rejectValue("birthday", "Invalid", "You must be at least 13 years old to register an account.");
 		}
 		
@@ -45,6 +45,7 @@ public class UserValidator implements Validator {
 			errors.rejectValue("confirmPassword", "Match", "Passwords must match.");
 		}
 	}
+	
 	
 	public void editUserValidation(Object target, Errors errors) {
 		User user = (User) target;

@@ -89,7 +89,7 @@ public class UserController {
 			Model model
 			) {
 		if (error != null) {
-			model.addAttribute("errorMessage", "Invalid credentials. Please try again.");
+			model.addAttribute("errorMessage", "Invalid credentials or banned status. Please try again, or contact Admin.");
 		}
 		
 		if (logout != null) {
@@ -146,5 +146,23 @@ public class UserController {
 		userToUpdate.setBirthday(user.getBirthday());
 		userService.updateUser(userToUpdate);
 		return "redirect:/users/view/" + (Long) session.getAttribute("userId");
+	}
+	
+	@GetMapping("/users/ban/{userId}")
+	public String immaBadUserPunishMe(@PathVariable("userId") Long userId) {
+		userService.banUser(userId);
+		return "redirect:/admin";
+	}
+	
+	@GetMapping("/users/deactivate/{userId}")
+	public String immaLazyUserDeactivateMe(@PathVariable("userId") Long userId) {
+		userService.deactivateUser(userId);
+		return "redirect:/admin";
+	}
+	
+	@GetMapping("/users/activate/{userId}")
+	public String activateMe(@PathVariable("userId") Long userId) {
+		userService.activateUser(userId);
+		return "redirect:/admin";
 	}
 }

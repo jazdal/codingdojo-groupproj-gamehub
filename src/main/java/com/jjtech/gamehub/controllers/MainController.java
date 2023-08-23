@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.jjtech.gamehub.models.Game;
 import com.jjtech.gamehub.models.Review;
+import com.jjtech.gamehub.models.Status;
 import com.jjtech.gamehub.models.User;
 import com.jjtech.gamehub.services.GameService;
 import com.jjtech.gamehub.services.ReviewService;
+import com.jjtech.gamehub.services.StatusService;
 import com.jjtech.gamehub.services.UserService;
 
 import jakarta.servlet.http.HttpSession;
@@ -34,13 +36,21 @@ public class MainController {
 	@Autowired
 	private ReviewService reviewService;
 	
+	@Autowired
+	private StatusService statusService;
+	
 	@GetMapping("/admin")
 	public String admin(
 			Model model,
 			Principal principal
 			) {
+		Status active = statusService.findStatus("STATUS_ACTIVE");
+		Status banned = statusService.findStatus("STATUS_BANNED");
+		Status inactive = statusService.findStatus("STATUS_INACTIVE");
 		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
-		model.addAttribute("users", userService.getAllUsers());
+		model.addAttribute("activeUsers", userService.getAllUsersByStatus(active));
+		model.addAttribute("bannedUsers", userService.getAllUsersByStatus(banned));
+		model.addAttribute("inactiveUsers", userService.getAllUsersByStatus(inactive));
 		return "admin.jsp";
 	}
 	

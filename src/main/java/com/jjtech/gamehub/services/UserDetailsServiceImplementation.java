@@ -27,6 +27,12 @@ public class UserDetailsServiceImplementation implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found");
 		}
+		
+		// Check if the user is banned
+		if (user.getStatus().getState().equals("STATUS_BANNED")) {
+			throw new UsernameNotFoundException("User is banned");
+		}
+		
 		Set<GrantedAuthority> authorities = new HashSet<>();
 		Role role = user.getRole();
 		

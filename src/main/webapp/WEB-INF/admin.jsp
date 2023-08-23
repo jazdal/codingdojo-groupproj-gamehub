@@ -73,7 +73,7 @@
 		<h3 class="mb-5">Admin Dashboard</h3>
 	</div>
 	<div class="container-fluid mb-5">
-		<h4 class="mb-3">All Users:</h4>
+		<h4 class="mb-3">Active Users:</h4>
 		<table id="myTable" class="table table-striped align-middle border rounded overflow-hidden bg-gradient shadow">
 			<thead>
 				<tr>
@@ -85,7 +85,7 @@
 				</tr>
 			</thead>
 			<tbody class="table-group-divider">
-				<c:forEach var="oneUser" items="${users}">
+				<c:forEach var="oneUser" items="${activeUsers}">
 					<tr>
 						<td class="d-flex flex-column align-items-center">
 							<c:choose>
@@ -101,10 +101,83 @@
 						<td>${oneUser.getFirstName()}</td>
 						<td>${oneUser.getLastName()}</td>
 						<td>${oneUser.getEmail()}</td>
-						<td>
-							<a href=""><button class="btn btn-sm btn-warning my-1">Ban</button></a>
-							<a href=""><button class="btn btn-sm btn-danger my-1">Deactivate</button></a>
+						<c:choose>
+							<c:when test="${oneUser.getRole().getName().contains('ROLE_ADMIN')}">
+								<td><strong>ADMIN</strong></td>
+							</c:when>
+							<c:otherwise>
+								<td>
+									<a href="/users/ban/${oneUser.getId()}"><button class="btn btn-sm btn-warning my-1">Ban</button></a>
+									<a href="/users/deactivate/${oneUser.getId()}"><button class="btn btn-sm btn-danger my-1">Deactivate</button></a>
+								</td>
+							</c:otherwise>
+						</c:choose>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<h4 class="mb-3">Banned Users:</h4>
+		<table id="myTable" class="table table-striped align-middle border rounded overflow-hidden bg-gradient shadow">
+			<thead>
+				<tr>
+					<th class="custom-bg-color text-dark">Username</th>
+					<th class="custom-bg-color text-dark">First Name</th>
+					<th class="custom-bg-color text-dark">Last Name</th>
+					<th class="custom-bg-color text-dark">Email</th>	
+					<th class="custom-bg-color text-dark">Actions</th>									
+				</tr>
+			</thead>
+			<tbody class="table-group-divider">
+				<c:forEach var="oneUser" items="${bannedUsers}">
+					<tr>
+						<td class="d-flex flex-column align-items-center">
+							<c:choose>
+								<c:when test="${oneUser.getImgUrl() eq null || oneUser.getImgUrl() eq ''}">
+									<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
+								</c:when>
+								<c:otherwise>
+									<img id="blankProfilePic" src="${oneUser.getImgUrl()}" alt="user_profile_picture">
+								</c:otherwise>
+							</c:choose>
+							<a href="/users/view/${oneUser.getId()}" class="h5">${oneUser.getUsername()}</a>
 						</td>
+						<td>${oneUser.getFirstName()}</td>
+						<td>${oneUser.getLastName()}</td>
+						<td>${oneUser.getEmail()}</td>
+						<td><a href="/users/activate/${oneUser.getId()}"><button class="btn btn-sm btn-warning my-1">Unban</button></a></td>
+					</tr>
+				</c:forEach>
+			</tbody>
+		</table>
+		<h4 class="mb-3">Inactive Users:</h4>
+		<table id="myTable" class="table table-striped align-middle border rounded overflow-hidden bg-gradient shadow">
+			<thead>
+				<tr>
+					<th class="custom-bg-color text-dark">Username</th>
+					<th class="custom-bg-color text-dark">First Name</th>
+					<th class="custom-bg-color text-dark">Last Name</th>
+					<th class="custom-bg-color text-dark">Email</th>	
+					<th class="custom-bg-color text-dark">Actions</th>									
+				</tr>
+			</thead>
+			<tbody class="table-group-divider">
+				<c:forEach var="oneUser" items="${inactiveUsers}">
+					<tr>
+						<td class="d-flex flex-column align-items-center">
+							<c:choose>
+								<c:when test="${oneUser.getImgUrl() eq null || oneUser.getImgUrl() eq ''}">
+									<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture">
+								</c:when>
+								<c:otherwise>
+									<img id="blankProfilePic" src="${oneUser.getImgUrl()}" alt="user_profile_picture">
+								</c:otherwise>
+							</c:choose>
+							<a href="/users/view/${oneUser.getId()}" class="h5">${oneUser.getUsername()}</a>
+						</td>
+						<td>${oneUser.getFirstName()}</td>
+						<td>${oneUser.getLastName()}</td>
+						<td>${oneUser.getEmail()}</td>
+						<td><a href="/users/activate/${oneUser.getId()}"><button class="btn btn-sm btn-success my-1">Activate</button></a></td>
 					</tr>
 				</c:forEach>
 			</tbody>
