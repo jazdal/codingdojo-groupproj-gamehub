@@ -97,7 +97,7 @@ public class User {
 			fetch = FetchType.LAZY
 	)
 	private List<Game> games;
-	
+
 	@OneToMany(
 			mappedBy = "user", 
 			fetch = FetchType.LAZY
@@ -292,5 +292,12 @@ public class User {
 
 	public void setLikedGames(List<Game> likedGames) {
 		this.likedGames = likedGames;
+	}
+	public List<Game> getGames() {
+		return games;
+	}
+
+	public void setGames(List<Game> games) {
+		this.games = games;
 	}
 }

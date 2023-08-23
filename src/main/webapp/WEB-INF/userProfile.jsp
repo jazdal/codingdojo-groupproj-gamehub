@@ -106,27 +106,41 @@
 								<td>${user.getBio()}</td>
 							</c:if>
 							<c:if test="${empty user.getBio()}">
-								<td>User has not provided this yet. Noob.</td>
+								<td>User has not provided this yet.</td>
 							</c:if>
 						</tr>
 						<tr>
 							<th class="custom-bg-color text-dark custom-bottom-border col-2">Owned Games:</th>
 							<td>
-<%-- 								<ul>
-									<c:forEach var="oneGame" items="${user.getGames() }">
-										<li>${oneGame.title}</li>
-									</c:forEach>
-								</ul> --%>
+								<c:choose>
+									<c:when test="${empty user.getOwnedGames()}">
+										Nothing to see here. :(
+									</c:when>
+									<c:otherwise>
+										<ul>
+											<c:forEach var="oneGame" items="${user.getOwnedGames()}">
+												<li>${oneGame.title}</li>
+											</c:forEach>
+										</ul>
+									</c:otherwise>
+								</c:choose>
 							</td>
 						</tr>
 						<tr>
 							<th class="custom-bg-color text-dark border-dark col-2">Reviewed Games:</th>
 							<td>
-								<ul>
-									<c:forEach var="oneReview" items="${user.getReviews()}">
-										<li>${oneReview.getGame().getTitle()}</li>
-									</c:forEach>
-								</ul>
+								<c:choose>
+									<c:when test="${empty user.getReviews()}">
+										Nothing to see here. :(
+									</c:when>
+									<c:otherwise>
+										<ul>
+											<c:forEach var="oneReview" items="${user.getReviews()}">
+												<li>${oneReview.getGame().getTitle()}</li>
+											</c:forEach>
+										</ul>
+									</c:otherwise>
+								</c:choose>
 							</td>
 						</tr>
 					</tbody>
@@ -134,55 +148,57 @@
 			</div>
 		</div>
 		<div class="my-5">
-	       	<c:if test="${currentUser.getId() == user.getId()}">
-				<h4 class="mb-3">Your Reviews:</h4>
-							<table class="mb-4 table table-hover fs-5 align-middle border rounded overflow-hidden bg-gradient shadow">
-					<tbody>
-						<c:forEach var="oneReview" items="${user.getReviews()}">
-						<tr>
-							<td class="mt-3">
-								<div class="d-flex flex-column justify-content-center align-items-center">
-									<a href="/games/view/${oneReview.getGame().getId()}"><img src="${oneReview.getGame().getImgUrl()}" class="game-pic mb-1"/></a>
-									<a href="/games/view/${oneReview.getGame().getId()}">${oneReview.getGame().getTitle()}</a>
-								</div>
-							</td>
-							<td>
-								<c:choose>
-									<c:when test="${oneReview.getRating() == 1}">
-										<p>Rating: <span class="star"><i class="fa-solid fa-star"></i></span></p>
-									</c:when>
-									<c:when test="${oneReview.getRating() == 2}">
-										<p>Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></p>
-									</c:when>
-									<c:when test="${oneReview.getRating() == 3}">
-										<p>Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></p>
-									</c:when>
-									<c:when test="${oneReview.getRating() == 4}">
-										<p>Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></p>
-									</c:when>
-									<c:when test="${oneReview.getRating() == 5}">
-										<p>Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></p>
-									</c:when>
-								</c:choose>
-								<p>Posted: ${oneReview.getCreatedAt()}</p>
-								<p>${oneReview.getGameReview()}</p>
-							</td>
-							<c:if test="${currentUser.getId() == oneReview.getUser().getId()}">
-								<td>
-									<div>
-										<a href="/games/${oneReview.getGame().getId()}/review/edit/${oneReview.getId()}"><button class="btn btn-sm btn-warning">Edit Review</button></a>
-										<a href="/games/${oneReview.getGame().getId()}/review/delete/${oneReview.getId()}"><button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this review?')">Delete Review</button></a>
+			<c:if test="${not empty user.getReviews()}">
+		       	<c:if test="${currentUser.getId() == user.getId()}">
+					<h4 class="mb-3">Your Reviews:</h4>
+					<table class="mb-4 table table-hover fs-5 align-middle border rounded overflow-hidden bg-gradient shadow">
+						<tbody>
+							<c:forEach var="oneReview" items="${user.getReviews()}">
+							<tr>
+								<td class="mt-3">
+									<div class="d-flex flex-column justify-content-center align-items-center">
+										<a href="/games/view/${oneReview.getGame().getId()}"><img src="${oneReview.getGame().getImgUrl()}" class="game-pic mb-1"/></a>
+										<a href="/games/view/${oneReview.getGame().getId()}">${oneReview.getGame().getTitle()}</a>
 									</div>
 								</td>
-							</c:if>
-						</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-	     	</c:if>
-	     	<c:if test="${currentUser.getId() != user.getId()}">
-				<h4 class="mb-5">Reviews by ${user.getUsername()}:</h4>
-	     	</c:if>			
+								<td>
+									<c:choose>
+										<c:when test="${oneReview.getRating() == 1}">
+											<p>Rating: <span class="star"><i class="fa-solid fa-star"></i></span></p>
+										</c:when>
+										<c:when test="${oneReview.getRating() == 2}">
+											<p>Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></p>
+										</c:when>
+										<c:when test="${oneReview.getRating() == 3}">
+											<p>Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></p>
+										</c:when>
+										<c:when test="${oneReview.getRating() == 4}">
+											<p>Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></p>
+										</c:when>
+										<c:when test="${oneReview.getRating() == 5}">
+											<p>Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></p>
+										</c:when>
+									</c:choose>
+									<p>Posted: <fmt:formatDate value="${oneReview.getCreatedAt()}" pattern="MMMM dd, yyyy"/></p>
+									<p>${oneReview.getGameReview()}</p>
+								</td>
+								<c:if test="${currentUser.getId() == oneReview.getUser().getId()}">
+									<td>
+										<div>
+											<a href="/games/${oneReview.getGame().getId()}/review/edit/${oneReview.getId()}"><button class="btn btn-sm btn-warning my-1">Edit Review</button></a>
+											<a href="/games/${oneReview.getGame().getId()}/review/delete/${oneReview.getId()}"><button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this review?')">Delete Review</button></a>
+										</div>
+									</td>
+								</c:if>
+							</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+		     	</c:if>
+		     	<c:if test="${currentUser.getId() != user.getId()}">
+					<h4 class="mb-5">Reviews by ${user.getUsername()}:</h4>
+		     	</c:if>	
+	     	</c:if>		
 		</div>
 	</div>
 	<script>

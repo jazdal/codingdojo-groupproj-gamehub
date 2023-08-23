@@ -86,7 +86,10 @@
 		<form:form class="container col-md-8" action="/users/process" method="PUT" modelAttribute="user">
 			<form:input type="hidden" path="id" value="${user.getId()}" />
 			<form:input type="hidden" path="password" value="${user.getPassword()}" />
-			<table class="mb-4 table fs-5 shadow rounded border overflow-hidden">
+			<form:input type="hidden" path="reviews"/>
+			<form:input type="hidden" path="ownedGames"/>
+			<form:input type="hidden" path="likedGames"/>							
+			<table class="mb-4 table table-hover fs-5 shadow rounded border overflow-hidden">
 				<tbody>
 					<tr>
 						<td class="custom-bg-color text-dark custom-bottom-border">
@@ -155,18 +158,38 @@
 						<td class="custom-bg-color text-dark custom-bottom-border">
 							<label class="col-form-label fw-semibold">Owned Games:</label>
 						</td>
-						<td class="align-middle">List of Owned Games</td>
+						<td class="align-middle">
+								<c:choose>
+									<c:when test="${empty user.getOwnedGames()}">
+										Nothing to see here. :(
+									</c:when>
+									<c:otherwise>
+										<ul>
+											<c:forEach var="oneGame" items="${user.getOwnedGames()}">
+												<li>${oneGame.title}</li>
+											</c:forEach>
+										</ul>
+									</c:otherwise>
+								</c:choose>
+						</td>
 					</tr>
 					<tr>
 						<td class="custom-bg-color text-dark custom-bottom-border">
 							<label class="col-form-label fw-semibold">Reviewed Games:</label>
 						</td>
 						<td class="align-middle">
-							<ul>
-								<c:forEach var="oneReview" items="${user.getReviews()}">
-									<li>${oneReview.getGame().getTitle()}</li>
-								</c:forEach>
-							</ul>
+								<c:choose>
+									<c:when test="${empty user.getReviews()}">
+										Nothing to see here. :(
+									</c:when>
+									<c:otherwise>
+										<ul>
+											<c:forEach var="oneReview" items="${user.getReviews()}">
+												<li>${oneReview.getGame().getTitle()}</li>
+											</c:forEach>
+										</ul>
+									</c:otherwise>
+								</c:choose>
 						</td>
 					</tr>
 				</tbody>

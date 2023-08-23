@@ -77,6 +77,9 @@
 		<form:form class="row" action="/games/edit/${game.getId()}/process" method="PUT" modelAttribute="game">
 			<form:hidden path="user" value="${currentUser.getId()}"/>
 			<form:input type="hidden" path="id" value="${game.getId()}"/>
+			<form:input type="hidden" path="reviews"/>
+			<form:input type="hidden" path="owners"/>
+			<form:input type="hidden" path="likers"/>
 			<div class="row mb-3">
 				<form:label path="title" class="col-form-label col-sm-2 h6">Game Title:</form:label>
 				<div class="col-sm-10">

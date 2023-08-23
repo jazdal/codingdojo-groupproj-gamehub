@@ -13,6 +13,7 @@
 	<title>GameHub: Registration and Login</title>
 	<link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="/css/style.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body class="bg-dark">
     <nav class="navbar navbar-expand-lg bg-black" data-bs-theme="dark">
@@ -20,9 +21,15 @@
             <a class="navbar-brand" href="/">
               <img src="/img/gamehub_logo (transparent).png" alt="gamehub_logo (transparent)" width="120" height="34">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <ul class="navbar-nav justify-content-end align-items-md-center">
+            	<li class="nav-item">
+           			<div class="d-flex align-items-center form-check form-switch ps-0">
+			           <i class="bi bi-moon-stars-fill text-white me-5"></i>
+			           <input class="form-check-input" type="checkbox" role="switch" id="switch" onClick="toggleTheme()" style="max-height: 20px; max-width:50px;">
+			           <i class="bi bi-brightness-high-fill text-white ms-2"></i>
+     		 		</div>
+               </li>
+            </ul>
         </div>
     </nav>
 	<div id="regForm" class="p-3 container-fluid">

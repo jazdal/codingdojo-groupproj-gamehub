@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.jjtech.gamehub.models.Game;
 import com.jjtech.gamehub.models.Status;
 import com.jjtech.gamehub.models.User;
 import com.jjtech.gamehub.repositories.RoleRepository;
@@ -91,5 +92,20 @@ public class UserService {
 			activeUser.setStatus(statusRepo.findByState("STATUS_ACTIVE"));
 		}
 		return userRepo.save(activeUser);
+	}
+	
+	// Own a game:
+	public void ownGame(Game thisGame, User currentUser) {
+		List<Game> currentOwnedGames = currentUser.getOwnedGames();
+		currentOwnedGames.add(thisGame);
+		currentUser.setOwnedGames(currentOwnedGames);
+		userRepo.save(currentUser);
+	}
+	// Disown a game:
+	public void disownGame(Game thisGame, User currentUser) {
+		List<Game> currentOwnedGames = currentUser.getOwnedGames();
+		currentOwnedGames.remove(thisGame);
+		currentUser.setOwnedGames(currentOwnedGames);
+		userRepo.save(currentUser);
 	}
 }

@@ -77,14 +77,24 @@
 	<div class="container-fluid d-flex flex-column justify-content-center mt-5">
 		<img src="${game.getImgUrl()}" style="width:100%; height:auto;" class="shadow-lg">
 		<h3 class="my-3 text-center">${game.getTitle()}</h3>
-		<c:if test="${currentUser.getId() == game.getUser().getId() }">
+		<c:if test="${currentUser.getId() == game.getUser().getId() || currentUser.getRole().getName().contains('ROLE_ADMIN')}">
 			<div class="text-center mb-3">
 				<a href="/games/edit/${game.getId()}"><button class="btn btn-sm btn-warning">Edit</button></a>
 				<a href="/games/delete/${game.getId()}"><button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this game?')">Delete</button></a>
 			</div>
 		</c:if>
 		<div class="d-flex align-items-center justify-content-between mb-3">
-			<a href="/"><button class="btn btn-sm btn-warning">Add to Owned Games</button></a>
+			<div class="d-flex">
+				<c:choose>
+					<c:when test="${!currentUser.getOwnedGames().contains(game)}">
+						<a href="/games/own/${game.getId()}"><button class="btn btn-sm btn-warning">Add to Owned Games</button></a>
+					</c:when>
+					<c:otherwise>
+						<a href="/games/disown/${game.getId()}"><button class="btn btn-sm btn-warning">Remove from Owned Games</button></a>
+					</c:otherwise>
+				</c:choose>
+
+			</div>
 			<div class="d-flex">
 				<p>${game.getLikers().size()} people like this game.</p>
 				<c:choose>
@@ -181,10 +191,10 @@
 										<p>Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span></p>
 									</c:when>
 								</c:choose>
-								<p>Posted: <fmt:formatDate value="${oneReview.getCreatedAt()}" pattern="MMMM dd, yyyy" /></p>
+								<p>Posted: <fmt:formatDate value="${oneReview.getCreatedAt()}" pattern="MMMM dd, yyyy"/></p>
 								<p>${oneReview.getGameReview()}</p>
 							</td>
-							<c:if test="${currentUser.getId() == oneReview.getUser().getId()}">
+							<c:if test="${currentUser.getId() == oneReview.getUser().getId() || currentUser.getRole().getName().contains('ROLE_ADMIN')}">
 								<td>
 									<div>
 										<a href="/games/${game.getId()}/review/edit/${oneReview.getId()}"><button class="btn btn-sm btn-warning my-2">Edit Review</button></a>

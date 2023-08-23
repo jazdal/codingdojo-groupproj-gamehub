@@ -100,7 +100,7 @@
 						<td>${oneGame.getDescription()}</td>
 						<td>
 							<a href="/games/view/${oneGame.getId()}"><button class="btn btn-sm btn-primary my-1">View</button></a>
-							<c:if test="${currentUser.getId() == oneGame.getUser().getId()}">
+							<c:if test="${currentUser.getId() == oneGame.getUser().getId() || currentUser.getRole().getName().contains('ROLE_ADMIN')}">
 								<a href="/games/edit/${oneGame.getId()}"><button class="btn btn-sm btn-warning my-1">Edit</button></a>
 								<a href="/games/delete/${oneGame.getId()}"><button class="btn btn-sm btn-danger my-1" onclick="return confirm('Are you sure you want to delete this game?')">Delete</button></a>
 							</c:if>

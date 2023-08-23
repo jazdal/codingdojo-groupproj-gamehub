@@ -47,7 +47,9 @@ public class MainController {
 		Status active = statusService.findStatus("STATUS_ACTIVE");
 		Status banned = statusService.findStatus("STATUS_BANNED");
 		Status inactive = statusService.findStatus("STATUS_INACTIVE");
+		List<User> allUsers = userService.getAllUsers();
 		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
+		model.addAttribute("allUsers", allUsers);
 		model.addAttribute("activeUsers", userService.getAllUsersByStatus(active));
 		model.addAttribute("bannedUsers", userService.getAllUsersByStatus(banned));
 		model.addAttribute("inactiveUsers", userService.getAllUsersByStatus(inactive));
@@ -264,5 +266,33 @@ public class MainController {
 		reviewService.deleteReview(reviewId);
 		model.addAttribute("currentUser", userService.findUserByUsername(principal.getName()));
 		return "redirect:/games/view/" + gameId;
+	}
+	
+	@GetMapping("/games/own/{gameId}")
+	public String ownGame(
+			@PathVariable("gameId") Long gameId, 
+			Principal principal, 
+			Model model
+			) {
+		Game thisGame = gameService.findGameById(gameId);
+		User currentUser = userService.findUserByUsername(principal.getName());
+		userService.ownGame(thisGame, currentUser);
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("game", thisGame);
+		return "gamesView.jsp";
+	}
+	
+	@GetMapping("/games/disown/{gameId}")
+	public String disownGame(
+			@PathVariable("gameId") Long gameId, 
+			Principal principal, 
+			Model model
+			) {
+		Game thisGame = gameService.findGameById(gameId);
+		User currentUser = userService.findUserByUsername(principal.getName());
+		userService.disownGame(thisGame, currentUser);
+		model.addAttribute("currentUser", currentUser);
+		model.addAttribute("game", thisGame);
+		return "gamesView.jsp";
 	}
 }
