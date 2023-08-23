@@ -128,7 +128,7 @@
 			<h4 class="mb-3">All User Reviews:</h4>
 			<c:choose>
 				<c:when test="${average >= 1.0 && average <= 1.49}">
-					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i></span> ${average} out of 5.</h5>
+					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i></span> <fmt:formatNumber value="${average}" pattern="#0.00"/> out of 5.</h5>
 				</c:when>
 				<c:when test="${average >= 1.5 && average <= 1.99}">
 					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></span> ${average} out of 5.</h5>
@@ -137,22 +137,22 @@
 					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> ${average} out of 5.</h5>
 				</c:when>
 				<c:when test="${average >= 2.5 && average <= 2.99}">
-					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></span> ${average} out of 5.</h5>
+					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></span> <fmt:formatNumber value="${average}" pattern="#0.00"/> out of 5.</h5>
 				</c:when>
 				<c:when test="${average >= 3.0 && average <= 3.49}">
-					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> ${average} out of 5.</h5>
+					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> <fmt:formatNumber value="${average}" pattern="#0.00"/> out of 5.</h5>
 				</c:when>
 				<c:when test="${average >= 3.5 && average <= 3.99}">
-					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></span> ${average} out of 5.</h5>
+					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></span> <fmt:formatNumber value="${average}" pattern="#0.00"/> out of 5.</h5>
 				</c:when>
 				<c:when test="${average >= 4.0 && average <= 4.49}">
-					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> ${average} out of 5.</h5>
+					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> <fmt:formatNumber value="${average}" pattern="#0.00"/> out of 5.</h5>
 				</c:when>
 				<c:when test="${average >= 4.5 && average <= 4.99}">
-					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></span> ${average} out of 5.</h5>
+					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half"></i></span> <fmt:formatNumber value="${average}" pattern="#0.00"/> out of 5.</h5>
 				</c:when>
 				<c:when test="${average == 5}">
-					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> ${average} out of 5.</h5>
+					<h5>Average Rating: <span class="star"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span> <fmt:formatNumber value="${average}" pattern="#0.00"/> out of 5.</h5>
 				</c:when>
 				<c:otherwise>
 				</c:otherwise>
@@ -167,13 +167,20 @@
 					<tbody>
 						<c:forEach var="oneReview" items="${game.getReviews()}">
 						<tr>
-							<td class="mt-3">
+							<td class="mt-3 col-2">
 								<div class="d-flex flex-column justify-content-center align-items-center">
-									<img src="${oneReview.getUser().getImgUrl()}" class="profile-pic"/>
+									<c:choose>
+										<c:when test="${empty oneReview.getUser().getImgUrl()}">
+											<img id="blankProfilePic" src="/img/blank_profile_pic.png" alt="blank_user_profile_picture" class="profile-pic">
+										</c:when>
+										<c:otherwise>
+											<img src="${oneReview.getUser().getImgUrl()}" class="profile-pic"/>
+										</c:otherwise>
+									</c:choose>
 									<p>${oneReview.getUser().getUsername()}</p>
 								</div>
 							</td>
-							<td>
+							<td class="col-8">
 								<c:choose>
 									<c:when test="${oneReview.getRating() == 1}">
 										<p>Rating: <span class="star"><i class="fa-solid fa-star"></i></span></p>
@@ -194,18 +201,19 @@
 								<p>Posted: <fmt:formatDate value="${oneReview.getCreatedAt()}" pattern="MMMM dd, yyyy"/></p>
 								<p>${oneReview.getGameReview()}</p>
 							</td>
-							<c:if test="${currentUser.getId() == oneReview.getUser().getId() || currentUser.getRole().getName().contains('ROLE_ADMIN')}">
-								<td>
-									<div>
-										<a href="/games/${game.getId()}/review/edit/${oneReview.getId()}"><button class="btn btn-sm btn-warning my-2">Edit Review</button></a>
-										<a href="/games/${game.getId()}/review/delete/${oneReview.getId()}"><button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this review?')">Delete Review</button></a>
-									</div>
-								</td>
-							</c:if>
-							<c:if test="${currentUser.getId() != oneReview.getUser().getId()}">
-								<td>
-								</td>
-							</c:if>
+							<c:choose>
+								<c:when test="${currentUser.getId() == oneReview.getUser().getId() || currentUser.getRole().getName().contains('ROLE_ADMIN')}">
+									<td class="col-2">
+										<div>
+											<a href="/games/${game.getId()}/review/edit/${oneReview.getId()}"><button class="btn btn-sm btn-warning my-2">Edit Review</button></a>
+											<a href="/games/${game.getId()}/review/delete/${oneReview.getId()}"><button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this review?')">Delete Review</button></a>
+										</div>
+									</td>
+								</c:when>
+								<c:otherwise>
+									<td></td>
+								</c:otherwise>
+							</c:choose>
 						</tr>
 						</c:forEach>
 					</tbody>
