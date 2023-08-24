@@ -149,8 +149,12 @@
 		</div>
 		<div class="my-5">
 			<c:if test="${not empty user.getReviews()}">
-		       	<c:if test="${currentUser.getId() == user.getId()}">
+				<c:if test="${currentUser.getId() == user.getId()}">
 					<h4 class="mb-3">Your Reviews:</h4>
+		     	</c:if>	
+				<c:if test="${currentUser.getId() != user.getId()}">
+					<h4 class="mb-5">Reviews by ${user.getUsername()}:</h4>
+		     	</c:if>	
 					<table class="mb-4 table table-hover fs-5 align-middle border rounded overflow-hidden bg-gradient shadow">
 						<tbody>
 							<c:forEach var="oneReview" items="${user.getReviews()}">
@@ -182,10 +186,12 @@
 									<p>Posted: <fmt:formatDate value="${oneReview.getCreatedAt()}" pattern="MMMM dd, yyyy"/></p>
 									<p>${oneReview.getGameReview()}</p>
 								</td>
-								<c:if test="${currentUser.getId() == oneReview.getUser().getId()}">
+								<c:if test="${currentUser.getId() == oneReview.getUser().getId() || currentUser.getRole().getName().contains('ROLE_ADMIN')}">
 									<td>
 										<div>
+										<c:if test="${currentUser.getId() == oneReview.getUser().getId()}">
 											<a href="/games/${oneReview.getGame().getId()}/review/edit/${oneReview.getId()}"><button class="btn btn-sm btn-warning my-1">Edit Review</button></a>
+										</c:if>
 											<a href="/games/${oneReview.getGame().getId()}/review/delete/${oneReview.getId()}"><button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this review?')">Delete Review</button></a>
 										</div>
 									</td>
@@ -194,10 +200,6 @@
 							</c:forEach>
 						</tbody>
 					</table>
-		     	</c:if>
-		     	<c:if test="${currentUser.getId() != user.getId()}">
-					<h4 class="mb-5">Reviews by ${user.getUsername()}:</h4>
-		     	</c:if>	
 	     	</c:if>		
 		</div>
 	</div>

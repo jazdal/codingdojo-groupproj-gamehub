@@ -205,7 +205,9 @@
 								<c:when test="${currentUser.getId() == oneReview.getUser().getId() || currentUser.getRole().getName().contains('ROLE_ADMIN')}">
 									<td class="col-2">
 										<div>
+										<c:if test="${currentUser.getId() == oneReview.getUser().getId()}">
 											<a href="/games/${game.getId()}/review/edit/${oneReview.getId()}"><button class="btn btn-sm btn-warning my-2">Edit Review</button></a>
+										</c:if>
 											<a href="/games/${game.getId()}/review/delete/${oneReview.getId()}"><button class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this review?')">Delete Review</button></a>
 										</div>
 									</td>
